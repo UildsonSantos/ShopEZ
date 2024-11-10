@@ -22,6 +22,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     on<RemoveItemEvent>(_onRemoveItem);
     on<MarkItemAsPurchasedEvent>(_onMarkItemAsPurchased);
     on<GetItemsEvent>(_onGetItems);
+    on<SortItemsAlphabeticallyEvent>(_onSortItemsAlphabetically);
+    on<SortItemsByStatusEvent>(_onSortItemsByStatus);
   }
 
   Future<void> _onAddItem(
@@ -62,5 +64,33 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
       (failure) => emit(ShoppingListError(failure.message)),
       (items) => emit(ShoppingListLoaded(items)),
     );
+  }
+
+  void _onSortItemsAlphabetically(
+      SortItemsAlphabeticallyEvent event, Emitter<ShoppingListState> emit) {
+    if (state is ShoppingListLoaded) {
+      final currentState = state as ShoppingListLoaded;
+      final sortedItems = List<Item>.from(currentState.items);
+      sortedItems.sort((a, b) => a.name.compareTo(b.name));
+      emit(ShoppingListLoaded(sortedItems));
+    }
+  }
+
+  void _onSortItemsByStatus(
+      SortItemsByStatusEvent event, Emitter<ShoppingListState> emit) {
+    if (state is ShoppingListLoaded) {
+      final currentState = state as ShoppingListLoaded;
+      final sortedItems = List<Item>.from(currentState.items);
+      sortedItems.sort((a, b) {
+        if (a.isPurchased == b.isPurchased) {
+          return 0;
+        } else if (a.isPurchased) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      emit(ShoppingListLoaded(sortedItems));
+    }
   }
 }

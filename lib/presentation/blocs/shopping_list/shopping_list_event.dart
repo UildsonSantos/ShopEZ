@@ -35,3 +35,7 @@ final class MarkItemAsPurchasedEvent extends ShoppingListEvent {
 }
 
 final class GetItemsEvent extends ShoppingListEvent {}
+
+class SortItemsAlphabeticallyEvent extends ShoppingListEvent {}
+
+class SortItemsByStatusEvent extends ShoppingListEvent {}
