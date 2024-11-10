@@ -31,8 +31,7 @@ class ShoppingListScreen extends StatelessWidget {
                   trailing: Checkbox(
                     value: item.isPurchased,
                     onChanged: (value) {
-                      BlocProvider.of<ShoppingListBloc>(context)
-                          .add(MarkItemAsPurchasedEvent(item.id));
+                      _markItemAsPurchased(context, item.id);
                     },
                   ),
                   onLongPress: () {
@@ -107,5 +106,10 @@ class ShoppingListScreen extends StatelessWidget {
 
   void _removeItem(BuildContext context, String itemId) {
     BlocProvider.of<ShoppingListBloc>(context).add(RemoveItemEvent(itemId));
+  }
+
+  void _markItemAsPurchased(BuildContext context, String itemId) {
+    BlocProvider.of<ShoppingListBloc>(context)
+        .add(MarkItemAsPurchasedEvent(itemId));
   }
 }
