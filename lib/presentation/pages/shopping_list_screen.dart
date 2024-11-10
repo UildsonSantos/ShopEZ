@@ -36,8 +36,7 @@ class ShoppingListScreen extends StatelessWidget {
                     },
                   ),
                   onLongPress: () {
-                    BlocProvider.of<ShoppingListBloc>(context)
-                        .add(RemoveItemEvent(item.id));
+                    _removeItem(context, item.id);
                   },
                 );
               },
@@ -104,5 +103,9 @@ class ShoppingListScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _removeItem(BuildContext context, String itemId) {
+    BlocProvider.of<ShoppingListBloc>(context).add(RemoveItemEvent(itemId));
   }
 }
