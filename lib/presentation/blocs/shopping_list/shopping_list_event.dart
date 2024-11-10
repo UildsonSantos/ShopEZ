@@ -39,3 +39,21 @@ final class GetItemsEvent extends ShoppingListEvent {}
 class SortItemsAlphabeticallyEvent extends ShoppingListEvent {}
 
 class SortItemsByStatusEvent extends ShoppingListEvent {}
+
+class SetThemeColorEvent extends ShoppingListEvent {
+  final Color color;
+
+  const SetThemeColorEvent(this.color);
+
+  @override
+  List<Object> get props => [color];
+}
+
+class SetAlertEvent extends ShoppingListEvent {
+  final String alert;
+
+  const SetAlertEvent(this.alert);
+
+  @override
+  List<Object> get props => [alert];
+}

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_ez/domain/entities/entities.dart';
 import 'package:shop_ez/domain/usecases/usecases.dart';
@@ -24,6 +25,8 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
     on<GetItemsEvent>(_onGetItems);
     on<SortItemsAlphabeticallyEvent>(_onSortItemsAlphabetically);
     on<SortItemsByStatusEvent>(_onSortItemsByStatus);
+    on<SetThemeColorEvent>(_onSetThemeColor);
+    on<SetAlertEvent>(_onSetAlert);
   }
 
   Future<void> _onAddItem(
@@ -91,6 +94,21 @@ class ShoppingListBloc extends Bloc<ShoppingListEvent, ShoppingListState> {
         }
       });
       emit(ShoppingListLoaded(sortedItems));
+    }
+  }
+
+  void _onSetThemeColor(
+      SetThemeColorEvent event, Emitter<ShoppingListState> emit) {
+    if (state is ShoppingListLoaded) {
+      final currentState = state as ShoppingListLoaded;
+      emit(ShoppingListLoaded(currentState.items, themeColor: event.color));
+    }
+  }
+
+  void _onSetAlert(SetAlertEvent event, Emitter<ShoppingListState> emit) {
+    if (state is ShoppingListLoaded) {
+      final currentState = state as ShoppingListLoaded;
+      emit(ShoppingListLoaded(currentState.items, alert: event.alert));
     }
   }
 }

@@ -13,11 +13,13 @@ final class ShoppingListLoading extends ShoppingListState {}
 
 final class ShoppingListLoaded extends ShoppingListState {
   final List<Item> items;
+  final Color? themeColor;
+  final String? alert;
 
-  const ShoppingListLoaded(this.items);
+  const ShoppingListLoaded(this.items, {this.themeColor, this.alert});
 
   @override
-  List<Object> get props => [items];
+  List<Object> get props => [items, themeColor ?? '', alert ?? ''];
 }
 
 final class ShoppingListError extends ShoppingListState {
