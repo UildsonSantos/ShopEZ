@@ -9,6 +9,7 @@ import 'package:shop_ez/domain/usecases/mark_item_as_purchased.dart';
 import 'package:shop_ez/domain/usecases/remove_item.dart';
 import 'package:shop_ez/presentation/blocs/blocs.dart';
 
+/// Tests for the `ShoppingListBloc`.
 class MockAddItem extends Mock implements AddItem {}
 
 class MockRemoveItem extends Mock implements RemoveItem {}
@@ -24,6 +25,7 @@ void main() {
   late MockMarkItemAsPurchased mockMarkItemAsPurchased;
   late MockGetItems mockGetItems;
 
+  /// Initial setup for the tests.
   setUp(() {
     mockAddItem = MockAddItem();
     mockRemoveItem = MockRemoveItem();
@@ -37,13 +39,18 @@ void main() {
     );
   });
 
+  /// Test item.
   const tItem = Item(id: '1', name: 'Test Item', category: 'Test Category');
+
+  /// Test items.
   const tItems = [
     Item(id: '1', name: 'Item 1', category: 'Category 1'),
     Item(id: '2', name: 'Item 2', category: 'Category 2'),
   ];
 
+  /// Group of tests for the `ShoppingListBloc`.
   group('ShoppingListBloc', () {
+    /// Tests if the bloc emits the correct states when a `GetItemsEvent` is added.
     blocTest<ShoppingListBloc, ShoppingListState>(
       'emits [ShoppingListLoading, ShoppingListLoaded] when GetItemsEvent is added',
       build: () {
@@ -57,6 +64,7 @@ void main() {
       ],
     );
 
+    /// Tests if the bloc emits the correct states when an `AddItemEvent` is added.
     blocTest<ShoppingListBloc, ShoppingListState>(
       'emits [ShoppingListLoading, ShoppingListLoaded] when AddItemEvent is added',
       build: () {
@@ -72,6 +80,7 @@ void main() {
       ],
     );
 
+    /// Tests if the bloc emits the correct states when a `RemoveItemEvent` is added.
     blocTest<ShoppingListBloc, ShoppingListState>(
       'emits [ShoppingListLoading, ShoppingListLoaded] when RemoveItemEvent is added',
       build: () {
@@ -87,6 +96,7 @@ void main() {
       ],
     );
 
+    /// Tests if the bloc emits the correct states when a `MarkItemAsPurchasedEvent` is added.
     blocTest<ShoppingListBloc, ShoppingListState>(
       'emits [ShoppingListLoading, ShoppingListLoaded] when MarkItemAsPurchasedEvent is added',
       build: () {

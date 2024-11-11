@@ -4,6 +4,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:shop_ez/domain/entities/item.dart';
 import 'package:shop_ez/presentation/blocs/blocs.dart';
 
+/// Main screen for the shopping list application.
 class ShoppingListScreen extends StatelessWidget {
   const ShoppingListScreen({super.key});
 
@@ -11,7 +12,7 @@ class ShoppingListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Compras'),
+        title: const Text('ShopEZ'),
         actions: [
           IconButton(
             icon: const Icon(Icons.color_lens),
@@ -90,7 +91,7 @@ class ShoppingListScreen extends StatelessWidget {
           } else if (state is ShoppingListError) {
             return Center(child: Text('Erro: ${state.message}'));
           } else {
-            return const Center(child: Text('Erro desconhecido'));
+            return const Center(child: Text('Unknown error'));
           }
         },
       ),
@@ -103,6 +104,7 @@ class ShoppingListScreen extends StatelessWidget {
     );
   }
 
+  /// Shows a dialog to add a new item to the shopping list.
   void _showAddItemDialog(BuildContext context) {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController categoryController = TextEditingController();
@@ -111,17 +113,17 @@ class ShoppingListScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Adicionar Item'),
+          title: const Text('Add Item'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
               TextField(
                 controller: categoryController,
-                decoration: const InputDecoration(labelText: 'Categoria'),
+                decoration: const InputDecoration(labelText: 'Category'),
               ),
             ],
           ),
@@ -130,7 +132,7 @@ class ShoppingListScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(dialogContext).pop();
               },
-              child: const Text('Cancelar'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -143,7 +145,7 @@ class ShoppingListScreen extends StatelessWidget {
                     .add(AddItemEvent(item));
                 Navigator.of(dialogContext).pop();
               },
-              child: const Text('Adicionar'),
+              child: const Text('To add'),
             ),
           ],
         );
@@ -151,21 +153,24 @@ class ShoppingListScreen extends StatelessWidget {
     );
   }
 
+  /// Removes an item from the shopping list.
   void _removeItem(BuildContext context, String itemId) {
     BlocProvider.of<ShoppingListBloc>(context).add(RemoveItemEvent(itemId));
   }
 
+  /// Marks an item as purchased.
   void _markItemAsPurchased(BuildContext context, String itemId) {
     BlocProvider.of<ShoppingListBloc>(context)
         .add(MarkItemAsPurchasedEvent(itemId));
   }
 
+  /// Shows a color picker dialog to choose the theme color.
   void _showColorPicker(BuildContext context) {
     showDialog(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Escolher Cor do Tema'),
+          title: const Text('Choose Theme Color'),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: Colors.blue,
@@ -181,6 +186,7 @@ class ShoppingListScreen extends StatelessWidget {
     );
   }
 
+  /// Shows a dialog to set an alert message.
   void _showAlertDialog(BuildContext context) {
     final TextEditingController alertController = TextEditingController();
 
@@ -188,17 +194,17 @@ class ShoppingListScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Definir Alerta'),
+          title: const Text('Set Alert'),
           content: TextField(
             controller: alertController,
-            decoration: const InputDecoration(labelText: 'Alerta'),
+            decoration: const InputDecoration(labelText: 'Alert'),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(dialogContext).pop();
               },
-              child: const Text('Cancelar'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -206,7 +212,7 @@ class ShoppingListScreen extends StatelessWidget {
                     .add(SetAlertEvent(alertController.text));
                 Navigator.of(dialogContext).pop();
               },
-              child: const Text('Definir'),
+              child: const Text('Define'),
             ),
           ],
         );
